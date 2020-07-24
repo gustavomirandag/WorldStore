@@ -9,13 +9,19 @@ namespace WorldStore.ProductMicroservice.Infra.DataAccess
 {
     public class ProductContext : DbContext
     {
+        private readonly string dbConnectionString;
         public DbSet<Product> Products { get; set; }
         public DbSet<DbCategory> Categories { get; set; }
+
+        public ProductContext(string dbConnectionString)
+        {
+            this.dbConnectionString = dbConnectionString;
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("");
+            optionsBuilder.UseSqlServer(dbConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

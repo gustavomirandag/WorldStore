@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="WorldStoreApp.Views.EditProductPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry x:Name="EntryName" Placeholder="Type the product name" HorizontalOptions="FillAndExpand" />
+            <Entry x:Name="EntryPhoto" Placeholder="Type the product photo url" HorizontalOptions="FillAndExpand" />
+            <Entry x:Name="EntryPrice" Placeholder="Type the product price" HorizontalOptions="FillAndExpand" />
+            <StackLayout Orientation="Horizontal" Spacing="30" HorizontalOptions="CenterAndExpand">
+                <Button x:Name="BtnUpdate" Text="Update" Clicked="BtnUpdate_Clicked"/>
+                <Button x:Name="BtnCancel" Text="Cancel" Clicked="BtnCancel_Clicked"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

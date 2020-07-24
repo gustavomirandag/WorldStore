@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,25 +15,25 @@ namespace WorldStore.ProductMicroservice.Api.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly ProductContext _context;
+        private readonly IProductService _productService;
 
-        public ProductsController(ProductContext context)
+        public ProductsController(IProductService productService)
         {
-            _context = context;
+            _productService = productService;
         }
 
         // GET: api/Products
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            return Ok(await _productService.GetAllProductsAsync());
         }
 
         // GET: api/Products/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(Guid id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _productService.GetProductAsync(id);
 
             if (product == null)
             {
@@ -49,27 +50,12 @@ namespace WorldStore.ProductMicroservice.Api.Controllers
         public async Task<IActionResult> PutProduct(Guid id, Product product)
         {
             if (id != product.Id)
-            {
                 return BadRequest();
-            }
 
-            _context.Entry(product).State = EntityState.Modified;
+            var result = await _productService.UpdateProductAsync(product);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            if (!result)
+                return NotFound();
 
             return NoContent();
         }
@@ -80,31 +66,29 @@ namespace WorldStore.ProductMicroservice.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
+            var result = await _productService.AddProductAsync(product);
 
-            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+            if (!result)
+                BadRequest("Product invalid");
+
+            return Created("api/product", product);
         }
 
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Product>> DeleteProduct(Guid id)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
+            var result = await _productService.DeleteProductAsync(id);
 
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
+            if (!result)
+                return NotFound("Product not found!");
 
-            return product;
+            return Ok(id);
         }
 
         private bool ProductExists(Guid id)
         {
-            return _context.Products.Any(e => e.Id == id);
+            return _productService.GetProductAsync(id) != null;
         }
     }
 }

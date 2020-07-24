@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WorldStore.Common.Infra.DataAccess\WorldStore.Common.Infra.DataAccess.csproj" />
     <ProjectReference Include="..\WorldStore.ProductMicroservice.Domain\WorldStore.ProductMicroservice.Domain.csproj" />
   </ItemGroup>
 

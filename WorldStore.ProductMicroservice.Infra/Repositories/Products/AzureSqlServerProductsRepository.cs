@@ -10,7 +10,7 @@ namespace WorldStore.ProductMicroservice.Infra.Repositories
     public class AzureSqlServerProductsRepository : EntityFrameworkRepositoryBase<Guid,Product>, IProductRepository
     {
         public AzureSqlServerProductsRepository()
-            :base(new ProductContext("Server=tcp:crossstore-db-server-gustavo.database.windows.net,1433;Initial Catalog=crossstore-db;Persist Security Info=False;User ID=daniel;Password=@dsInf123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+            :base(new ProductContext("Server=tcp:world-store-db-server-gustavo.database.windows.net,1433;Initial Catalog=worldstore-db-gustavo;Persist Security Info=False;User ID=pivotto;Password=@dsInf123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
         {
         }
     }

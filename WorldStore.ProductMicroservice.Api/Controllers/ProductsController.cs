@@ -11,6 +11,7 @@ using WorldStore.ProductMicroservice.Infra.DataAccess;
 
 namespace WorldStore.ProductMicroservice.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
@@ -46,6 +47,7 @@ namespace WorldStore.ProductMicroservice.Api.Controllers
         // PUT: api/Products/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize(Roles="Manager")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(Guid id, Product product)
         {
@@ -63,6 +65,7 @@ namespace WorldStore.ProductMicroservice.Api.Controllers
         // POST: api/Products
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize(Roles = "Manager")]
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
@@ -75,6 +78,7 @@ namespace WorldStore.ProductMicroservice.Api.Controllers
         }
 
         // DELETE: api/Products/5
+        [Authorize(Roles = "Manager")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Product>> DeleteProduct(Guid id)
         {

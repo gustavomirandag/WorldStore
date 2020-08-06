@@ -79,7 +79,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldStore.Microservices.Ia
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldStore.Microservices.IamMicroservice.Admin.EntityFramework.Shared", "WorldStore.Microservices.IamMicroservice.Admin.EntityFramework.Shared\WorldStore.Microservices.IamMicroservice.Admin.EntityFramework.Shared.csproj", "{06B06285-FEBB-4279-B914-D7BCD4EFF8F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldStore.App.UI.Console", "WorldStore.App.UI.Console\WorldStore.App.UI.Console.csproj", "{EFD4CF85-89F5-480C-AA0C-B8DEA78749D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldStore.App.UI.Console", "WorldStore.App.UI.Console\WorldStore.App.UI.Console.csproj", "{EFD4CF85-89F5-480C-AA0C-B8DEA78749D6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console", "Console", "{CF6787DC-B735-4A64-BF79-FE806A21E08C}"
 EndProject

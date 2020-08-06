@@ -37,7 +37,7 @@ namespace WorldStore.ProductMicroservice.Api
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = "http://localhost:5000";
+                    options.Authority = "https://worldstore-gustavo-iammicroservice-identity.azurewebsites.net";
                     options.RequireHttpsMetadata = false;
                     options.ApiName = "ProductMicroservice_ApiResource";
                 });

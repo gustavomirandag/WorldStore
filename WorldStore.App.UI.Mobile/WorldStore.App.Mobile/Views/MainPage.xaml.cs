@@ -1,7 +1,10 @@
-﻿using System;
+﻿using IdentityModel.Client;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using WorldStore.App.Domain.Entities;
@@ -25,7 +28,8 @@ namespace WorldStoreApp.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            ListProducts(App.Service.GetAllProducts());
+            //ListProducts(App.Service.GetAllProducts());
+            ListProducts(GetAllProducts());
         }
 
         public void ListProducts(IEnumerable<Product> products)
@@ -47,7 +51,7 @@ namespace WorldStoreApp.Views
 
                 var image = new ImageButton();
                 image.HorizontalOptions = LayoutOptions.Center;
-                if (product.PhotoUrl != null)
+                if (!String.IsNullOrEmpty(product.PhotoUrl))
                     image.Source = ImageSource.FromUri(new Uri(product.PhotoUrl));
                 else
                     image.Source = ImageSource.FromUri(new Uri("https://cdn4.iconfinder.com/data/icons/refresh_cl/256/System/Box_Empty.png"));
@@ -73,6 +77,44 @@ namespace WorldStoreApp.Views
         private void BtAddProduct_Clicked(object sender, EventArgs e)
         {
             Navigation.PushModalAsync(new AddProductPage(), true);
+        }
+
+        private IEnumerable<Product> GetAllProducts()
+        {
+            var token = GetToken("Pivotto", "@dsInf123");
+
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
+            var result = client.GetAsync("https://worldstore-gustavo-product-microservice-api.azurewebsites.net/api/products").Result;
+
+            if (!result.IsSuccessStatusCode)
+            {
+                DisplayAlert("Erro ao Tentar obter os Produtos", "Não foi possível obter os produtos disponíveis, tente novamente mais tarde!", "Ok");
+                return new List<Product>();
+            }
+
+            var serializedProducts = result.Content.ReadAsStringAsync().Result;
+            var products = JsonConvert.DeserializeObject<IEnumerable<Product>>(serializedProducts);
+
+            return products;
+        }
+
+        private string GetToken(string username, string password)
+        {
+            var client = new HttpClient();
+            var response = client.RequestPasswordTokenAsync(new PasswordTokenRequest
+            {
+                Address = "https://worldstore-gustavo-iammicroservice-identity.azurewebsites.net/connect/token",
+
+                ClientId = "PostmanClientId",
+                //ClientSecret = "secret",
+                //Scope = "api1",
+
+                UserName = username,
+                Password = password
+            }).Result;
+
+            return response.AccessToken;
         }
     }
 }

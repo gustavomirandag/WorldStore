@@ -19,7 +19,7 @@ namespace WorldStore.App.UI.Console
             var client = new HttpClient();
             var response = client.RequestPasswordTokenAsync(new PasswordTokenRequest
             {
-                Address = "http://localhost:5000/connect/token",
+                Address = "https://worldstore-gustavo-iammicroservice-identity.azurewebsites.net/connect/token",
 
                 ClientId = "PostmanClientId",
                 //ClientSecret = "secret",

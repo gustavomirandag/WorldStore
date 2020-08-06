@@ -28,7 +28,7 @@ namespace WorldStoreApp.Views
             EntryPrice.Text = product.Price.ToString();
         }
 
-        private async Task BtnUpdate_Clicked(object sender, EventArgs e)
+        private async void BtnUpdate_Clicked(object sender, EventArgs e)
         {
             var name = EntryName.Text;
             var photo = EntryPhoto.Text;

@@ -2,7 +2,6 @@
 using System;
 using WorldStore.App.Domain.Services;
 using WorldStore.App.Infra.DataAccess.Repositories.Products;
-using WorldStoreApp.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

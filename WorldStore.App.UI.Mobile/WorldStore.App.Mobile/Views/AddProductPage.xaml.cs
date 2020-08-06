@@ -17,7 +17,7 @@ namespace WorldStoreApp.Views
             InitializeComponent();
         }
 
-        private async Task BtnAdd_Clicked(object sender, EventArgs e)
+        private async void BtnAdd_Clicked(object sender, EventArgs e)
         {
             var name = EntryName.Text;
             var photo = EntryPhoto.Text;
@@ -39,9 +39,9 @@ namespace WorldStoreApp.Views
             await Navigation.PopModalAsync(true);
         }
 
-        private void BtnCancel_Clicked(object sender, EventArgs e)
+        private async void BtnCancel_Clicked(object sender, EventArgs e)
         {
-            Navigation.PopModalAsync(true);
+            await Navigation.PopModalAsync(true);
         }
     }
 }

@@ -148,9 +148,9 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CrossStoreApp\CrossStoreApp.csproj">
-      <Project>{6EE50970-E246-4193-AA61-0B38F7BFAB80}</Project>
-      <Name>CrossStoreApp</Name>
+    <ProjectReference Include="..\WorldStore.App.Mobile\WorldStoreApp.csproj">
+      <Project>{061c959c-6531-4da2-b3a6-768c1ee750c8}</Project>
+      <Name>WorldStoreApp</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

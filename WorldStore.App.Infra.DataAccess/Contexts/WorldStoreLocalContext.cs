@@ -11,6 +11,10 @@ namespace WorldStore.App.Infra.DataAccess.Contexts
         private readonly string dbConnectionString;
         public DbSet<Product> Products { get; set; }
 
+        public WorldStoreLocalContext()
+        {
+
+        }
 
         public WorldStoreLocalContext(string dbConnectionString)
         {

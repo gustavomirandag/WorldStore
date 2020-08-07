@@ -102,6 +102,37 @@ namespace WorldStore.Microservices.IamMicroservice.Admin.Api.Controllers
             return CreatedAtAction(nameof(Get), new { id = createdUser.Id }, createdUser);
         }
 
+        /// <summary>
+        /// Cria um usuário com o Role de Customer
+        /// Customer Role Id = b66e640a-b235-49d9-96e5-d51e97255701
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpPost("/api/UsersAndRoles")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        public async Task<ActionResult<TUserDto>> PostCustomer([FromBody] TUserDto user)
+        {
+            if (!EqualityComparer<TUserDtoKey>.Default.Equals(user.Id, default))
+            {
+                return BadRequest(_errorResources.CannotSetId());
+            }
+
+            var (identityResult, userId) = await _identityService.CreateUserAsync(user);
+            var createdUser = await _identityService.GetUserAsync(userId.ToString());
+
+            //Add Role to the new User
+            var role = await _identityService.GetRoleAsync("b66e640a-b235-49d9-96e5-d51e97255701");
+            var userAndRole = new UserRoleApiDto<TUserDtoKey, TRoleDtoKey>();
+            userAndRole.UserId = createdUser.Id;
+            userAndRole.RoleId = role.Id;
+
+            var userRolesDto = _mapper.Map<TUserRolesDto>(userAndRole);
+            await _identityService.CreateUserRoleAsync(userRolesDto);
+
+            return CreatedAtAction(nameof(Get), new { id = createdUser.Id }, createdUser);
+        }
+
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]TUserDto user)
         {

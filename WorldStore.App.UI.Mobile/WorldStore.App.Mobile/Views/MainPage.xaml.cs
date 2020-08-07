@@ -81,10 +81,8 @@ namespace WorldStoreApp.Views
 
         private IEnumerable<Product> GetAllProducts()
         {
-            var token = GetToken("Pivotto", "@dsInf123");
-
             var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
+            client.DefaultRequestHeaders.Add("Authorization", "bearer " + App.Token);
             var result = client.GetAsync("https://worldstore-gustavo-product-microservice-api.azurewebsites.net/api/products").Result;
 
             if (!result.IsSuccessStatusCode)
@@ -97,24 +95,6 @@ namespace WorldStoreApp.Views
             var products = JsonConvert.DeserializeObject<IEnumerable<Product>>(serializedProducts);
 
             return products;
-        }
-
-        private string GetToken(string username, string password)
-        {
-            var client = new HttpClient();
-            var response = client.RequestPasswordTokenAsync(new PasswordTokenRequest
-            {
-                Address = "https://worldstore-gustavo-iammicroservice-identity.azurewebsites.net/connect/token",
-
-                ClientId = "PostmanClientId",
-                //ClientSecret = "secret",
-                //Scope = "api1",
-
-                UserName = username,
-                Password = password
-            }).Result;
-
-            return response.AccessToken;
         }
     }
 }

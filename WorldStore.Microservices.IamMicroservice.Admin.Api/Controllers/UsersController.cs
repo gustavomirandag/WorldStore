@@ -102,23 +102,30 @@ namespace WorldStore.Microservices.IamMicroservice.Admin.Api.Controllers
             return CreatedAtAction(nameof(Get), new { id = createdUser.Id }, createdUser);
         }
 
+        public class UserPasswordDto
+        {
+            public TUserDto user { get; set; }
+            public UserChangePasswordApiDto<TUserDtoKey> password { get; set; }
+        }
+
         /// <summary>
         /// Cria um usuário com o Role de Customer
         /// Customer Role Id = b66e640a-b235-49d9-96e5-d51e97255701
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
+        //[Authorize(Roles = "Manager")]
         [HttpPost("/api/UsersAndRoles")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult<TUserDto>> PostCustomer([FromBody] TUserDto user)
+        public async Task<ActionResult<TUserDto>> PostCustomer([FromBody] UserPasswordDto userPasswordDto)
         {
-            if (!EqualityComparer<TUserDtoKey>.Default.Equals(user.Id, default))
+            if (!EqualityComparer<TUserDtoKey>.Default.Equals(userPasswordDto.user.Id, default))
             {
                 return BadRequest(_errorResources.CannotSetId());
             }
 
-            var (identityResult, userId) = await _identityService.CreateUserAsync(user);
+            var (identityResult, userId) = await _identityService.CreateUserAsync(userPasswordDto.user);
             var createdUser = await _identityService.GetUserAsync(userId.ToString());
 
             //Add Role to the new User
@@ -129,6 +136,11 @@ namespace WorldStore.Microservices.IamMicroservice.Admin.Api.Controllers
 
             var userRolesDto = _mapper.Map<TUserRolesDto>(userAndRole);
             await _identityService.CreateUserRoleAsync(userRolesDto);
+
+            //Set User Password
+            userPasswordDto.password.UserId = createdUser.Id;
+            var userChangePasswordDto = _mapper.Map<TUserChangePasswordDto>(userPasswordDto.password);
+            await _identityService.UserChangePasswordAsync(userChangePasswordDto);
 
             return CreatedAtAction(nameof(Get), new { id = createdUser.Id }, createdUser);
         }

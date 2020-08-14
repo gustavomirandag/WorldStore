@@ -9,6 +9,7 @@
         <StackLayout>
             <Entry x:Name="EntryUsername" Placeholder="Username" />
             <Entry x:Name="EntryEmail" Placeholder="Email" />
+            <Entry x:Name="EntryPhone" Placeholder="Phone"/>
             <Entry x:Name="EntryPassword" Placeholder="Password" />
             <Button x:Name="ButtonRegister" Text="Register" Clicked="ButtonRegister_Clicked"  />
             <Button x:Name="ButtonCancel" Text="Cancel" Clicked="ButtonCancel_Clicked"/>

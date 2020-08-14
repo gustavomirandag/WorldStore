@@ -46,7 +46,7 @@ namespace WorldStoreApp.Views.Login
             {
                 Address = "https://worldstore-gustavo-iammicroservice-identity.azurewebsites.net/connect/token",
 
-                ClientId = "PostmanClientId",
+                ClientId = "Postman_ClientId",
                 //ClientSecret = "secret",
                 //Scope = "api1",
 

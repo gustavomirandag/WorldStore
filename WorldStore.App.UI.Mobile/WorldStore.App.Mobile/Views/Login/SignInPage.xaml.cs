@@ -21,14 +21,13 @@ namespace WorldStoreApp.Views.Login
 
         private void ButtonSignIn_Clicked(object sender, EventArgs e)
         {
-            var token = GetToken(EntryUsername.Text, EntryPassword.Text);
-            if (String.IsNullOrEmpty(token))
+            var result = App.AppService.SignIn(EntryUsername.Text, EntryPassword.Text);
+
+            if (result == false)
             {
                 DisplayAlert("Usuário ou senha inválida!", "Usuário ou senha inválida, digite novamente!", "Ok");
                 return;
             }
-
-            App.Token = token;
 
             Navigation.InsertPageBefore(new MainPage(), this);
             Navigation.PopAsync().ConfigureAwait(false);
@@ -37,24 +36,6 @@ namespace WorldStoreApp.Views.Login
         private void ButtonSignUp_Clicked(object sender, EventArgs e)
         {
             Navigation.PushModalAsync(new SignUpPage());
-        }
-
-        private string GetToken(string username, string password)
-        {
-            var client = new HttpClient();
-            var response = client.RequestPasswordTokenAsync(new PasswordTokenRequest
-            {
-                Address = "https://worldstore-gustavo-iammicroservice-identity.azurewebsites.net/connect/token",
-
-                ClientId = "Postman_ClientId",
-                //ClientSecret = "secret",
-                //Scope = "api1",
-
-                UserName = username,
-                Password = password
-            }).Result;
-
-            return response.AccessToken;
         }
     }
 }

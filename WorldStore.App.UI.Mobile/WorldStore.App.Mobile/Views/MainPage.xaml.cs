@@ -29,11 +29,19 @@ namespace WorldStoreApp.Views
         {
             base.OnAppearing();
             //ListProducts(App.Service.GetAllProducts());
-            ListProducts(GetAllProducts());
+            ListProducts();
         }
 
-        public void ListProducts(IEnumerable<Product> products)
+        public void ListProducts()
         {
+            var products = App.AppService.GetAllProducts();
+
+            if (products == null || products.Count() == 0)
+            {
+                DisplayAlert("Erro ao Tentar obter os Produtos", "Não foi possível obter os produtos disponíveis, tente novamente mais tarde!", "Ok");
+                return;
+            }
+
             FlexLayoutProducts.Children.Clear();
 
             foreach (var product in products)
@@ -77,24 +85,6 @@ namespace WorldStoreApp.Views
         private void BtAddProduct_Clicked(object sender, EventArgs e)
         {
             Navigation.PushModalAsync(new AddProductPage(), true);
-        }
-
-        private IEnumerable<Product> GetAllProducts()
-        {
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Authorization", "bearer " + App.Token);
-            var result = client.GetAsync("https://worldstore-gustavo-product-microservice-api.azurewebsites.net/api/products").Result;
-
-            if (!result.IsSuccessStatusCode)
-            {
-                DisplayAlert("Erro ao Tentar obter os Produtos", "Não foi possível obter os produtos disponíveis, tente novamente mais tarde!", "Ok");
-                return new List<Product>();
-            }
-
-            var serializedProducts = result.Content.ReadAsStringAsync().Result;
-            var products = JsonConvert.DeserializeObject<IEnumerable<Product>>(serializedProducts);
-
-            return products;
         }
     }
 }

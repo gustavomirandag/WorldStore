@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\WorldStore.App.Application\WorldStore.App.Application.csproj" />
     <ProjectReference Include="..\..\WorldStore.App.Domain\WorldStore.App.Domain.csproj" />
     <ProjectReference Include="..\..\WorldStore.App.Infra.DataAccess\WorldStore.App.Infra.DataAccess.csproj" />
     <ProjectReference Include="..\..\WorldStore.App.Domain\WorldStore.App.Domain.csproj" />

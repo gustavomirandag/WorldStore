@@ -6,9 +6,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using WorldStoreApp.Views.Dtos;
+using WorldStore.App.Application.Models.Dtos;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static WorldStore.App.Application.Models.Dtos.UserPasswordDto;
 
 namespace WorldStoreApp.Views.Login
 {
@@ -22,13 +23,6 @@ namespace WorldStoreApp.Views.Login
 
         private void  ButtonRegister_Clicked(object sender, EventArgs e)
         {
-            var token = GetAdminToken();
-            if (String.IsNullOrEmpty(token))
-            {
-                DisplayAlert("Usuário ou senha inválida!", "Usuário ou senha inválida, digite novamente!", "Ok");
-                return;
-            }
-
             var userPasswordDto = new UserPasswordDto
             {
                 user = new User
@@ -47,18 +41,11 @@ namespace WorldStoreApp.Views.Login
                 }
             };
 
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
-            var serializedUserPassword = JsonConvert.SerializeObject(userPasswordDto);
-            var httpContent = new StringContent(serializedUserPassword, Encoding.UTF8, "application/json");
-            var result = httpClient.PostAsync("https://worldstore-gustavo-iammicroservice-api.azurewebsites.net/api/UsersAndRoles", httpContent).Result;
+            var result = App.AppService.SignUp(userPasswordDto);
 
-
-
-            if (!result.IsSuccessStatusCode)
+            if (result == false)
             {
-                var message = result.Content.ReadAsStringAsync().Result;
-                DisplayAlert("Não foi possível criar o usuário!", message, "Ok");
+                DisplayAlert("Não foi possível criar o usuário!", "Erro ao tentar criar o usuário!" , "Ok");
                 return;
             }
 
@@ -72,22 +59,5 @@ namespace WorldStoreApp.Views.Login
             Navigation.PopModalAsync(true);
         }
 
-        private string GetAdminToken()
-        {
-            var client = new HttpClient();
-            var response = client.RequestPasswordTokenAsync(new PasswordTokenRequest
-            {
-                Address = "https://worldstore-gustavo-iammicroservice-identity.azurewebsites.net/connect/token",
-
-                ClientId = "Postman_ClientId",
-                //ClientSecret = "secret",
-                //Scope = "api1",
-
-                UserName = "admin",
-                Password = "@dsInf123"
-            }).Result;
-
-            return response.AccessToken;
-        }
     }
 }

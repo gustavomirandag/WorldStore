@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using WorldStore.Common.Domain.Entities;
 
-namespace WorldStore.ProductMicroservice.Domain.AggregatesModel.ProductAggregate
+namespace WorldStore.Microservice.OrderMicroservice.Domain.AggregatesModel.ProductAggregate
 {
     public class Product : EntityBase<Guid>
     {

@@ -8,7 +8,7 @@ using WorldStore.Common.Domain.Interfaces.Repositories;
 
 namespace WorldStore.Common.Infra.DataAccess.Repositories
 {
-    public abstract class EntityFrameworkRepositoryBase<TKey, T> : IRepository<TKey,T> where T : TEntity<TKey>
+    public abstract class EntityFrameworkRepositoryBase<TKey, T> : IRepository<TKey,T>, IQueryRepository<TKey,T> where T : TEntity<TKey>
     {
         protected DbContext db;
 

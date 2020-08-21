@@ -12,4 +12,8 @@
     <ProjectReference Include="..\WorldStore.App.Domain\WorldStore.App.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\ViewModels\" />
+  </ItemGroup>
+
 </Project>

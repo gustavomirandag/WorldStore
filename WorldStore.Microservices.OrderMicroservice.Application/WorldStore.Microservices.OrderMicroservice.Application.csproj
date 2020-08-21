@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WorldStore.Microservice.OrderMicroservice.Domain\WorldStore.Microservice.OrderMicroservice.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

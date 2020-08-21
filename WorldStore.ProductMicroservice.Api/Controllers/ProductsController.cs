@@ -24,8 +24,8 @@ namespace WorldStore.ProductMicroservice.Api.Controllers
         }
 
         // GET: api/Products
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        [HttpGet("/api/products")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsV1()
         {
             return Ok(await _productService.GetAllProductsAsync());
         }

@@ -1,18 +1,16 @@
-﻿using IdentityModel.Client;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Security.Principal;
 using System.Text;
 using WorldStore.App.Application.Models.Dtos;
 using WorldStore.App.Domain.Entities;
 
 namespace WorldStore.App.Application
 {
-    public class MobileAppService : IAppService
+    public class ManagerWebAppService
     {
-        private static string token;
+        private string token;
 
         public IEnumerable<Product> GetAllProducts()
         {
@@ -26,9 +24,29 @@ namespace WorldStore.App.Application
             return products;
         }
 
+        public Product GetProduct(Guid Product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AddProduct(Product product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UpdateProduct(Product product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveProduct(Guid productId)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool SignIn(string username, string password)
         {
-            token = GetToken(username,password);
+            token = GetToken(username, password);
             if (String.IsNullOrEmpty(token))
                 return false;
             return true;
@@ -55,7 +73,7 @@ namespace WorldStore.App.Application
             {
                 Address = "https://worldstore-gustavo-iammicroservice-identity.azurewebsites.net/connect/token",
 
-                ClientId = "Postman_ClientId",
+                ClientId = "WorldStoreCustomerMobileApp_ClientId",
                 //ClientSecret = "secret",
                 //Scope = "api1",
 
@@ -73,7 +91,7 @@ namespace WorldStore.App.Application
             {
                 Address = "https://worldstore-gustavo-iammicroservice-identity.azurewebsites.net/connect/token",
 
-                ClientId = "Postman_ClientId",
+                ClientId = "WorldStoreCustomerMobileApp_ClientId",
                 //ClientSecret = "secret",
                 //Scope = "api1",
 

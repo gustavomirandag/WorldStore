@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WorldStore.Microservice.OrderMicroservice.Domain.AggregatesModel.OrderAggregate;
+using WorldStore.Microservices.OrderMicroservice.Application.Services;
 using WorldStore.Microservices.OrderMicroservice.Infra.DataAccess.Contexts;
 
 namespace WorldStore.Microservices.OrderMicroservice.Api.Controllers
@@ -14,12 +15,12 @@ namespace WorldStore.Microservices.OrderMicroservice.Api.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly IOrderService orderService;
+        private readonly IApiApplicationService applicationService;
         private readonly OrderContext _context;
 
         public OrdersController(IOrderService orderService, OrderContext context)
         {
-            this.orderService = orderService;
+            this.applicationService = applicationService;
             _context = context;
         }
 
@@ -80,9 +81,13 @@ namespace WorldStore.Microservices.OrderMicroservice.Api.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<IActionResult> PostOrder(Order order)
         {
-            orderService.CreateOrder(order.CustomerId, order.OrderItems);
+            bool validId = Guid.TryParse(User.FindFirst("sub")?.Value, out Guid customerId);
+            if (!validId)
+                return BadRequest("Not a valid userId");
+
+            order = await applicationService.CreateOrderAsync(customerId, order.OrderItems);
 
             return CreatedAtAction("GetOrder", new { id = order.Id }, order);
         }

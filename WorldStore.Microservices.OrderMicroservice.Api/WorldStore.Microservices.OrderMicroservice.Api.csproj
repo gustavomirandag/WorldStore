@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WorldStore.Microservice.OrderMicroservice.Domain\WorldStore.Microservice.OrderMicroservice.Domain.csproj" />
+    <ProjectReference Include="..\WorldStore.Microservices.OrderMicroservice.Application\WorldStore.Microservices.OrderMicroservice.Application.csproj" />
     <ProjectReference Include="..\WorldStore.Microservices.OrderMicroservice.Infra.DataAccess\WorldStore.Microservices.OrderMicroservice.Infra.DataAccess.csproj" />
   </ItemGroup>
 

@@ -10,6 +10,7 @@ namespace WorldStore.Common.Infra.Helper.Serializer
     {
         public T Deserialize<T>(string serializedObj)
         {
+            //FLURL alternativa ao Newtonsoft
             return JsonConvert.DeserializeObject<T>(serializedObj);
         }
 

@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WorldStore.Common.Application\WorldStore.Common.Application.csproj" />
     <ProjectReference Include="..\WorldStore.Microservice.OrderMicroservice.Domain\WorldStore.Microservice.OrderMicroservice.Domain.csproj" />
   </ItemGroup>
 

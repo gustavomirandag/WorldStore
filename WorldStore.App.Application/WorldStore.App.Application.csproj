@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WorldStore.App.Domain\WorldStore.App.Domain.csproj" />
+    <ProjectReference Include="..\WorldStore.App.Infra.DataAccess\WorldStore.App.Infra.DataAccess.csproj" />
+    <ProjectReference Include="..\WorldStore.Common.Infra.Helper\WorldStore.Common.Infra.Helper.csproj" />
   </ItemGroup>
 
   <ItemGroup>

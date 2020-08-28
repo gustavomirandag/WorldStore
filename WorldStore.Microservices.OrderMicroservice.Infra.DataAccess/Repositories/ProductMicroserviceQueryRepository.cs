@@ -11,11 +11,11 @@ using WorldStore.Microservice.OrderMicroservice.Domain.AggregatesModel.ProductAg
 
 namespace WorldStore.Microservices.OrderMicroservice.Infra.DataAccess.Repositories
 {
-    public class ProductQueryRepository : IQueryRepository<Guid, Product>
+    public class ProductMicroserviceQueryRepository : IProductQueryRepository
     {
         private ISerializerService serializerService;
 
-        public ProductQueryRepository(ISerializerService serializerService)
+        public ProductMicroserviceQueryRepository(ISerializerService serializerService)
         {
             this.serializerService = serializerService;
         }

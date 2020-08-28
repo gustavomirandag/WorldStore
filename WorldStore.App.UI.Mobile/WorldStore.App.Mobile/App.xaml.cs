@@ -6,6 +6,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using WorldStoreApp.Views.Login;
 using WorldStore.App.Application;
+using WorldStore.App.Infra.DataAccess.Repositories.Orders;
 
 namespace WorldStoreApp
 {
@@ -17,7 +18,7 @@ namespace WorldStoreApp
         public App()
         {
             InitializeComponent();
-            AppService = new AppService();
+            AppService = new CustomerMobileAppService(new OrderRemoteService(new OrderMicroserviceRepository()));
             Service = new ProductLocalService(new SQLiteProductsRepository(Device.RuntimePlatform));
             MainPage = new NavigationPage(new SignInPage());
         }

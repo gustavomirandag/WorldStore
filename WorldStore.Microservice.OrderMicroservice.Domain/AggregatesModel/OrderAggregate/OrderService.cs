@@ -17,7 +17,7 @@ namespace WorldStore.Microservice.OrderMicroservice.Domain.AggregatesModel.Order
             this.orderRepository = orderRepository;
         }
 
-        public Order CreateOrder(Guid customerId, IReadOnlyCollection<OrderItem> orderItems)
+        public Order CreateOrder(Guid customerId, IEnumerable<OrderItem> orderItems)
         {
             var order = new Order
             {

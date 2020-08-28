@@ -63,7 +63,7 @@ namespace WorldStoreApp.Views
                     image.Source = ImageSource.FromUri(new Uri(product.PhotoUrl));
                 else
                     image.Source = ImageSource.FromUri(new Uri("https://cdn4.iconfinder.com/data/icons/refresh_cl/256/System/Box_Empty.png"));
-                image.Clicked += async (sender, args) => await EditProductAsync(product);
+                image.Clicked += async (sender, args) => await BuyProductAsync(product);
                 productStackLayout.Children.Add(image);
 
                 var labelPrice = new Label();
@@ -77,14 +77,10 @@ namespace WorldStoreApp.Views
             }
         }
 
-        private async Task EditProductAsync(Product product)
+        private async Task BuyProductAsync(Product product)
         {
-            await Navigation.PushModalAsync(new EditProductPage(product), true);
-        }
-
-        private void BtAddProduct_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushModalAsync(new AddProductPage(), true);
+            await App.AppService.BuyProductAsync(product);
+            await DisplayAlert("Order Created", "Your order was created! It doesn't mean it's confirmed.", "Ok");
         }
     }
 }

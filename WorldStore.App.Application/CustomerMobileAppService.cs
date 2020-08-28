@@ -3,16 +3,23 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Security.Principal;
 using System.Text;
+using System.Threading.Tasks;
 using WorldStore.App.Application.Models.Dtos;
 using WorldStore.App.Domain.Entities;
+using WorldStore.App.Domain.Interfaces.Services;
+using WorldStore.App.Domain.Services;
+using WorldStore.App.Infra.DataAccess.Repositories.Orders;
+using WorldStore.Common.Domain.Interfaces.Services;
+using WorldStore.Common.Infra.Helper.Serializer;
 
 namespace WorldStore.App.Application
 {
     public class CustomerMobileAppService : IAppService
-    {
-        private static string token;
+    { 
+        private string token;
 
         public IEnumerable<Product> GetAllProducts()
         {
@@ -26,16 +33,25 @@ namespace WorldStore.App.Application
             return products;
         }
 
-        public bool BuyProduct(Product product)
+        public async Task BuyProductAsync(Product product)
         {
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
-            var result = client.GetAsync("https://worldstore-gustavo-product-microservice-api.azurewebsites.net/api/products").Result;
+            var orderItem = new OrderItem
+            {
+                Id = Guid.NewGuid(),
+                Name = product.Name,
+                ProductId = product.Id,
+                Price = product.Price,
+                SKU = product.SKU,
+                Quantity = 1,
+            };
+            var orderItems = new List<OrderItem>();
+            orderItems.Add(orderItem);
 
-            var serializedProducts = result.Content.ReadAsStringAsync().Result;
-            var products = JsonConvert.DeserializeObject<IEnumerable<Product>>(serializedProducts);
+            var order = new Order();
+            order.OrderItems = orderItems;
 
-            return products;
+            var orderService = new OrderRemoteService(new OrderMicroserviceRepository(token, new SerializerService()));
+            await orderService.CreateOrderAsync(order);
         }
 
         public bool SignIn(string username, string password)

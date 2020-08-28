@@ -7,7 +7,7 @@ namespace WorldStore.Microservice.OrderMicroservice.Domain.AggregatesModel.Order
 {
     public interface IOrderService
     {
-        Order CreateOrder(Guid customerId, IReadOnlyCollection<OrderItem> orderItems);
+        Order CreateOrder(Guid customerId, IEnumerable<OrderItem> orderItems);
         Task<bool> ProcessOrderAsync(Order order);
     }
 }

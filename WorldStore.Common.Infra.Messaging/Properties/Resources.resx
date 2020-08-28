@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ServiceBusConnectionString" xml:space="preserve">
-    <value>Endpoint=sb://worldstore-gustavo-servicebus.servicebus.windows.net/;SharedAccessKeyName=ServiceBusApplicationPolicy;SharedAccessKey=TS5Pi8JNzpyZXI6ORjXYG/hisspXfqXkmDwld3oVpsc=</value>
+    <value>COLOQUE AQUI SUA STRING DE CONEXÃO</value>
   </data>
 </root>

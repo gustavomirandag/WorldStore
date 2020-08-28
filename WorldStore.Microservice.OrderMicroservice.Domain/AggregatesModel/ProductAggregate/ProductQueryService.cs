@@ -9,6 +9,11 @@ namespace WorldStore.Microservice.OrderMicroservice.Domain.AggregatesModel.Produ
     {
         private IProductQueryRepository productQueryRepository;
 
+        public ProductQueryService(IProductQueryRepository productQueryRepository)
+        {
+            this.productQueryRepository = productQueryRepository;
+        }
+
         public async Task<Product> GetProductAsync(Guid productId)
         {
             return await productQueryRepository.ReadAsync(productId);

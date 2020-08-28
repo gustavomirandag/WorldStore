@@ -21,16 +21,9 @@ namespace WorldStore.Microservices.OrderMicroservice.OrderWorker
         static async Task Main(string[] args)
         {
             var builder = new HostBuilder();
-            builder.ConfigureWebJobs(b =>
+            builder.ConfigureServices(services =>
             {
-                b.AddServiceBus(sbOptions =>
-                {
-                    sbOptions.ConnectionString = Resources.ServiceBusConnectionString;
-                    sbOptions.MessageHandlerOptions.AutoComplete = true;
-                    sbOptions.MessageHandlerOptions.MaxConcurrentCalls = 16;
-                });
-            }).ConfigureServices(services =>
-            {
+                services.AddSingleton<Functions, Functions>();
                 services.AddSingleton<IMediatorHandler, AzureServiceBusQueue>();
                 services.AddSingleton<IProductQueryRepository, ProductMicroserviceQueryRepository>();
                 services.AddSingleton<DbContext, OrderContext>();
@@ -39,6 +32,15 @@ namespace WorldStore.Microservices.OrderMicroservice.OrderWorker
                 services.AddSingleton<IProductQueryService, ProductQueryService>();
                 services.AddSingleton<ISerializerService, SerializerService>();
                 services.AddSingleton<IWorkerApplicationService, WorkerApplicationService>();
+            }).ConfigureWebJobs(b =>
+            {
+                b.AddAzureStorageCoreServices();
+                b.AddServiceBus(sbOptions =>
+                {
+                    sbOptions.ConnectionString = Resources.ServiceBusConnectionString;
+                    sbOptions.MessageHandlerOptions.AutoComplete = true;
+                    sbOptions.MessageHandlerOptions.MaxConcurrentCalls = 16;
+                });
             });
             var host = builder.Build();
             using (host)

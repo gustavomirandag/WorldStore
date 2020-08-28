@@ -12,7 +12,6 @@
                 </FlexLayout>
             </StackLayout>
         </ScrollView>
-        <Button x:Name="BtBuyProduct" Text="Buy Product" HorizontalOptions="CenterAndExpand" />
     </StackLayout>
 
 </ContentPage>

@@ -12,5 +12,6 @@ namespace WorldStore.Microservice.OrderMicroservice.Domain.AggregatesModel.Order
         public string Name { get; set; }
         public Decimal Price { get; set; }
         public int Quantity { get; set; } //Bought Quantity
+        //public Order Order { get; set; }
     }
 }

@@ -11,5 +11,10 @@ namespace WorldStore.Microservice.OrderMicroservice.Domain.AggregatesModel.Order
         public Guid CustomerId { get; set; }
         public DateTime DateTime { get; set; }
         public IEnumerable<OrderItem> OrderItems { get; set; }
+
+        public Order()
+        {
+            OrderItems = new List<OrderItem>();
+        }
     }
 }

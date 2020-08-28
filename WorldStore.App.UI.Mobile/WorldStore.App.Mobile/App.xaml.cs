@@ -18,7 +18,7 @@ namespace WorldStoreApp
         public App()
         {
             InitializeComponent();
-            AppService = new CustomerMobileAppService(new OrderRemoteService(new OrderMicroserviceRepository()));
+            AppService = new CustomerMobileAppService();
             Service = new ProductLocalService(new SQLiteProductsRepository(Device.RuntimePlatform));
             MainPage = new NavigationPage(new SignInPage());
         }

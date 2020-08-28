@@ -27,7 +27,16 @@ namespace WorldStore.Microservices.OrderMicroservice.Infra.DataAccess.Contexts
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(dbConnectionString);
+            optionsBuilder.UseSqlServer("Server=tcp:world-store-db-server-gustavo.database.windows.net,1433;Initial Catalog=worldstore-db-gustavo;Persist Security Info=False;User ID=pivotto;Password=@dsInf123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            //modelBuilder.Entity<Order>()
+            //    .HasMany(c => c.OrderItems)
+            //    .WithOne(e => e.Order);
         }
     }
 }

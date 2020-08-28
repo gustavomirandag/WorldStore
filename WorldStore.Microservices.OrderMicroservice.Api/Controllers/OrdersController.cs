@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,7 @@ namespace WorldStore.Microservices.OrderMicroservice.Api.Controllers
         private readonly IApiApplicationService applicationService;
         private readonly OrderContext _context;
 
-        public OrdersController(IOrderService orderService, OrderContext context)
+        public OrdersController(IApiApplicationService applicationService, OrderContext context)
         {
             this.applicationService = applicationService;
             _context = context;
@@ -28,7 +29,7 @@ namespace WorldStore.Microservices.OrderMicroservice.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
-            return await _context.Orders.ToListAsync();
+            return await _context.Orders.Include(x => x.OrderItems).ToListAsync();
         }
 
         // GET: api/Orders/5
@@ -80,6 +81,7 @@ namespace WorldStore.Microservices.OrderMicroservice.Api.Controllers
         // POST: api/Orders
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> PostOrder(Order order)
         {

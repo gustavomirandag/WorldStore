@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using WorldStore.Common.Infra.DataAccess.Repositories;
@@ -8,5 +9,9 @@ namespace WorldStore.Microservices.OrderMicroservice.Infra.DataAccess.Repositori
 {
     public class OrderRepository : EntityFrameworkRepositoryBase<Guid, Order>, IOrderRepository
     {
+        public OrderRepository(DbContext dbContext)
+            :base(dbContext)
+        {
+        }
     }
 }

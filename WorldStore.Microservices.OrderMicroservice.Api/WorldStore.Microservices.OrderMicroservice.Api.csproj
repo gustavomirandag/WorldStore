@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -6,9 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Properties\PublishProfiles\worldstore-gustavo-order-microservice-api - Web Deploy.pubxml.user" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.6">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -16,6 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WorldStore.Common.Infra.Helper\WorldStore.Common.Infra.Helper.csproj" />
+    <ProjectReference Include="..\WorldStore.Common.Infra.Messaging\WorldStore.Common.Infra.Messaging.csproj" />
     <ProjectReference Include="..\WorldStore.Microservice.OrderMicroservice.Domain\WorldStore.Microservice.OrderMicroservice.Domain.csproj" />
     <ProjectReference Include="..\WorldStore.Microservices.OrderMicroservice.Application\WorldStore.Microservices.OrderMicroservice.Application.csproj" />
     <ProjectReference Include="..\WorldStore.Microservices.OrderMicroservice.Infra.DataAccess\WorldStore.Microservices.OrderMicroservice.Infra.DataAccess.csproj" />

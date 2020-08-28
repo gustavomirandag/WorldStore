@@ -61,7 +61,7 @@ namespace WorldStore.Common.Infra.Messaging.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Endpoint=sb://worldstore-gustavo-servicebus.servicebus.windows.net/;SharedAccessKeyName=ServiceBusApplicationPolicy;SharedAccessKey=TS5Pi8JNzpyZXI6ORjXYG/hisspXfqXkmDwld3oVpsc=.
+        ///   Looks up a localized string similar to COLOQUE AQUI SUA STRING DE CONEXÃO.
         /// </summary>
         internal static string ServiceBusConnectionString {
             get {
